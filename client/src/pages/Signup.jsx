@@ -14,7 +14,7 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault()
     try {
-      await axios.post(`http://localhost:3000/user/signup`, { username, email, password }, { withCredentials: true })
+      await axios.post(`https://securenotez.onrender.com/user/signup`, { username, email, password }, { withCredentials: true })
       setUsername('')
       setEmail('')
       setPassword('')
@@ -27,7 +27,7 @@ const Signup = () => {
   const handleLogin = async (e) => {
     e.preventDefault()
     try {
-      await axios.post(`http://localhost:3000/user/login`, { email: emaill, password: passwordl }, { withCredentials: true })
+      await axios.post(`https://securenotez.onrender.com/user/login`, { email: emaill, password: passwordl }, { withCredentials: true })
       setEmaill('')
       setPasswordl('')
       navigate('/')
