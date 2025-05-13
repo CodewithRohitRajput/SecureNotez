@@ -24,9 +24,13 @@ router.post('/signup' , async(req,res)=>{
 
         await newUser.save();
 
-        const token = jwt.sign({id : newUser._id} , secret);
-
-        res.cookie('token' , token);
+      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    // Set token in cookie
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production', // Secure in production
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax' // Adjust for cross-origin
+    });
 
         res.status(200).json({message : "User registered" , token });
 
@@ -45,8 +49,13 @@ router.post('/login' , async(req,res)=>{
         const passMatch = await bcrypt.compare(password , isUser.password);
         if(!passMatch) return res.status(401).json({message : "Password is wrong"});
 
-        const token = jwt.sign({id : isUser._id } , secret);
-        res.cookie('token' , token);
+      const token = jwt.sign({ id: isUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    // Set token in cookie
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production', // Secure in production
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax' // Adjust for cross-origin
+    });
 
         res.status(200).json({message : "User Logged In " , token});
 
