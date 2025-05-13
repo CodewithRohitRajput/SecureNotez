@@ -72,9 +72,14 @@ router.delete("/deleteNote/:id",verifyToken ,async (req, res) => {
   }
 });
 
-router.get('/singleNote/:id' ,verifyToken , async(req,res)=>{
-  const seeSingleNote = await Notes.findById(req.params.id)
-  res.status(200).json({message : "Note fetched" , seeSingleNote});
+router.get('/singleNote/:id', verifyToken, async (req, res) => {
+  try {
+    const seeSingleNote = await Notes.findById(req.params.id);
+    if (!seeSingleNote) return res.status(404).json({ message: "Note not found" });
+    res.status(200).json({ message: "Note fetched", seeSingleNote });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
 });
 
 module.exports = router;
