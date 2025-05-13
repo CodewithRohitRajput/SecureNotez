@@ -9,7 +9,7 @@ const Login = () => {
     
     const handleLogin = async (e) =>{
         e.preventDefault();
-        axios.post(`http://localhost:3000/user/login` , {email , password} , {withCredentials : true})
+        axios.post(`https://securenotez.onrender.com/user/login` , {email , password} , {withCredentials : true})
         setEmail('')
         setPassword('')
         navigate('/');
