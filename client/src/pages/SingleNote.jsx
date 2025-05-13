@@ -11,7 +11,7 @@ const SingleNote = () => {
 
   const handleSingleNoteSee = async () => {
     try {
-      const res = await axios.get(`http://localhost:3000/notes/singleNote/${id}`, { withCredentials: true })
+      const res = await axios.get(`https://securenotez.onrender.com/notes/singleNote/${id}`, { withCredentials: true })
       setNote(res.data.seeSingleNote)
     } catch (err) {
       console.error(err)
