@@ -9,7 +9,7 @@ const ViewNote = () => {
 
   const handleseeNote = async () => {
     try {
-      const res = await axios.get(`http://localhost:3000/notes/seeNote`, { withCredentials: true })
+      const res = await axios.get(`https://securenotez.onrender.com/notes/seeNote`, { withCredentials: true })
       setNotes(res.data.getNote)
     } catch (err) {
       console.error(err)
@@ -21,7 +21,7 @@ const ViewNote = () => {
   }
 
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:3000/notes/deleteNote/${id}`, { withCredentials: true })
+    await axios.delete(`https://securenotez.onrender.com/notes/deleteNote/${id}`, { withCredentials: true })
     await handleseeNote()
   }
 
