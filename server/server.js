@@ -21,12 +21,11 @@ mongoose.connect(process.env.MONGODB_URI, {
 const corsOptions = {
   origin: 'https://securenotez-1.onrender.com',
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE' , 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization']
 };
 
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // Handle preflight
 
 // Middleware
 app.use(express.json());
