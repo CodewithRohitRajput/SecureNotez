@@ -71,6 +71,7 @@ router.post('/login' , async(req,res)=>{
   httpOnly: true,
   secure: false,
   sameSite: 'Lax',
+  domain: '.onrender.com' 
 });
 
     res.status(200).json({ message: "Token received, give access to user" });
