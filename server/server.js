@@ -22,6 +22,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/secureNotes')
 app.use(cors({
   origin: 'https://securenotez-1.onrender.com',
   credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE']
 }));
 
 app.use(express.json());
