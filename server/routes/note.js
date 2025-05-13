@@ -75,6 +75,6 @@ router.delete("/deleteNote/:id",verifyToken ,async (req, res) => {
 router.get('/singleNote/:id' ,verifyToken , async(req,res)=>{
   const seeSingleNote = await Notes.findById(req.params.id)
   res.status(200).json({message : "Note fetched" , seeSingleNote});
-})
+});
 
 module.exports = router;
