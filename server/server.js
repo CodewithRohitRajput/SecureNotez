@@ -18,9 +18,7 @@ mongoose.connect(process.env.MONGODB_URI , { useNewUrlParser: true, useUnifiedTo
     console.error("MongoDB Error");
 })
 
-app.get('/test-cors', (req, res) => {
-  res.json({ message: 'CORS working!' });
-});
+
 
 
 const corsOptions = {
