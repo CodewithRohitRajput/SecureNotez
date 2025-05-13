@@ -1,46 +1,52 @@
 const express = require('express');
 const app = express();
-const jwt = require('jsonwebtoken');
-const cookieParser = require('cookie-parser');
-const cors = require('cors');
 const mongoose = require('mongoose');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const noteRoutes = require('./routes/note');
 const authRoutes = require('./routes/auth');
-const port =  process.env.PORT || 3000;
 
+const port = process.env.PORT || 3000;
 
-
-mongoose.connect(process.env.MONGODB_URI , { useNewUrlParser: true, useUnifiedTopology: true })
-.then(()=>{
-    console.log("MongoDB Connected");
+// Database connection
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 })
-.catch((err)=>{
-    console.error("MongoDB Error");
-})
+.then(() => console.log('MongoDB Connected'))
+.catch(err => console.error('MongoDB Connection Error:', err));
 
-
-
-
+// CORS configuration
 const corsOptions = {
   origin: 'https://securenotez-1.onrender.com',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 };
 
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Handle preflight
 
-// Handle preflight requests (for POST, PUT)
-app.options('*', cors(corsOptions));
-
-
+// Middleware
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('/notes' , noteRoutes);
-app.use('/user' , authRoutes);
+// Route verification middleware
+app.use((req, res, next) => {
+  console.log(`Incoming request to: ${req.path}`);
+  next();
+});
 
+// Routes
+app.use('/notes', noteRoutes);
+app.use('/user', authRoutes);
 
-app.listen( port , ()=>{
-    console.log(`You are connected to port :  ${port}`);
-})
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Route Error:', err);
+  res.status(500).json({ error: 'Internal server error' });
+});
+
+app.listen(port, () => {
+  console.log(`Server running on port: ${port}`);
+});
