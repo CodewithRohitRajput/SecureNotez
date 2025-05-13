@@ -11,7 +11,7 @@ const EditNote = () => {
 
   const handleEditNote = async () => {
     try {
-      const res = await axios.get(`http://localhost:3000/notes/singleNote/${id}`, { withCredentials: true })
+      const res = await axios.get(`https://securenotez.onrender.com/notes/singleNote/${id}`, { withCredentials: true })
       setTitle(res.data.seeSingleNote.title)
       setDescription(res.data.seeSingleNote.description)
     } catch (err) {
@@ -27,7 +27,7 @@ const EditNote = () => {
   const saveChanges = async (e) => {
     e.preventDefault()
     try {
-      await axios.patch(`http://localhost:3000/notes/editNote/${id}`, { title, description }, { withCredentials: true })
+      await axios.patch(`https://securenotez.onrender.com/notes/editNote/${id}`, { title, description }, { withCredentials: true })
       setTitle('')
       setDescription('')
       navigate('/seeNotes')
