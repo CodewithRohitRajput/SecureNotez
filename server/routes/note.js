@@ -72,7 +72,7 @@ router.delete("/deleteNote/:id",verifyToken ,async (req, res) => {
   }
 });
 
-router.get('/singleNote/:id', verifyToken, async (req, res) => {
+router.get("/singleNote/:id", verifyToken, async (req, res) => {
   try {
     const seeSingleNote = await Notes.findById(req.params.id);
     if (!seeSingleNote) return res.status(404).json({ message: "Note not found" });
