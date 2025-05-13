@@ -12,7 +12,7 @@ const Home = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await axios.get('http://localhost:3000/user/securityCheck', { withCredentials: true })
+        const res = await axios.get('https://securenotez.onrender.com/user/securityCheck', { withCredentials: true })
         // If token is valid, stay on the page (do nothing)
       } catch (err) {
         // If token is missing or invalid, redirect to Security page
@@ -25,7 +25,7 @@ const Home = () => {
 
   const handleCreateNote = async (e) => {
     e.preventDefault()
-    await axios.post(`http://localhost:3000/notes/addNote`, { title, description }, { withCredentials: true })
+    await axios.post(`https://securenotez.onrender.com/notes/addNote`, { title, description }, { withCredentials: true })
     setTitle('')
     setDescription('')
     navigate('/seeNotes')
