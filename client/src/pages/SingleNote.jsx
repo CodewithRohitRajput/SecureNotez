@@ -40,7 +40,6 @@ const SingleNote = () => {
           <p className="text-white text-base sm:text-lg font-mono">Loading...</p>
         </div>
       )}
-    <Footer/>
     </div>
   )
 }
