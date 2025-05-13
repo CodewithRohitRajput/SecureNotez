@@ -1,9 +1,9 @@
+require('dotenv').config();
 const express = require("express");
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const secret = 'secret'; // Must match the secret used in auth routes
 const Notes = require("../models/Notes");
-
+const secret = process.env.JWT_SECRET;
 // add note
 
 const verifyToken = (req, res, next) => {
