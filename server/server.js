@@ -23,12 +23,18 @@ app.get('/test-cors', (req, res) => {
 });
 
 
-app.use(cors({
+const corsOptions = {
   origin: 'https://securenotez-1.onrender.com',
   credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'] , 
-    allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(corsOptions));
+
+// Handle preflight requests (for POST, PUT)
+app.options('*', cors(corsOptions));
+
 
 app.use(express.json());
 app.use(cookieParser());
