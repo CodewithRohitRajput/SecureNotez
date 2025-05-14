@@ -24,6 +24,7 @@ const corsOptions = {
   methods: ['GET', 'POST', 'PUT', 'DELETE' , 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization']
 };
+app.set("trust proxy", 1);
 
 app.use(cors(corsOptions));
 
@@ -36,6 +37,7 @@ app.use((req, res, next) => {
   console.log(`Incoming request to: ${req.path}`);
   next();
 });
+
 
 // Routes
 app.use('/notes', noteRoutes);
