@@ -9,7 +9,7 @@ const Navbar = () => {
 
   const handleToggle = async () => {
     try {
-      const res = await axios.get(`http://localhost:3000/user/securityCheck`, { withCredentials: true })
+      const res = await axios.get(`https://securenotez.onrender.com/user/securityCheck`, { withCredentials: true })
       if (res.data) setIslogged(true)
     } catch (err) {
       setIslogged(false)
@@ -17,7 +17,7 @@ const Navbar = () => {
   }
 
   const handleLogout = async () => {
-    await axios.post(`http://localhost:3000/user/logout`, {}, { withCredentials: true })
+    await axios.post(`https://securenotez.onrender.com/user/logout`, {}, { withCredentials: true })
     navigate('/Security')
   }
 
