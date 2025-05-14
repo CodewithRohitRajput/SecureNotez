@@ -19,11 +19,14 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 // CORS configuration
 const corsOptions = {
-  origin: 'https://securenotez-1.onrender.com',
+  origin: function (origin, callback) {
+    callback(null, origin); // Reflect the request origin
+  },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE' , 'PATCH'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization']
 };
+
 app.set("trust proxy", 1);
 
 app.use(cors(corsOptions));
