@@ -20,12 +20,14 @@ router.post('/signup', async (req, res) => {
     await newUser.save();
 
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-      maxAge: 3600000 // 1 hour
-    });
+   res.cookie("token", token, {
+  httpOnly: true,
+  secure: true,
+  sameSite: "none",
+  domain: ".onrender.com", // Allow all subdomains
+  path: "/", // Accessible across all paths
+  maxAge: 3600000,
+});
 
     res.status(200).json({ message: "User registered" });
   } catch (err) {
@@ -44,12 +46,14 @@ router.post('/login', async (req, res) => {
     if (!passMatch) return res.status(401).json({ message: "Password is wrong" });
 
     const token = jwt.sign({ id: isUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-      maxAge: 3600000 // 1 hour
-    });
+   res.cookie("token", token, {
+  httpOnly: true,
+  secure: true,
+  sameSite: "none",
+  domain: ".onrender.com", // Allow all subdomains
+  path: "/", // Accessible across all paths
+  maxAge: 3600000,
+});
 
     res.status(200).json({ message: "User logged in" });
   } catch (err) {
