@@ -28,7 +28,6 @@ router.post("/signup", async (req, res) => {
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       path: "/", // Accessible across all paths
       maxAge: 3600000,
-      domain: '.onrender.com' 
     });
 
     res.status(200).json({ message: "User registered" });
@@ -58,7 +57,6 @@ router.post("/login", async (req, res) => {
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       path: "/", // Accessible across all paths
       maxAge: 3600000,
-      domain: 'onrender.com' 
     });
 
     res.status(200).json({ message: "User logged in" });
