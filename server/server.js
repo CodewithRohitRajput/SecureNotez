@@ -20,7 +20,19 @@ mongoose.connect(process.env.MONGODB_URI, {
 // CORS configuration
 const corsOptions = {
   origin: function (origin, callback) {
-    callback(null, origin); // Reflect the request origin
+    // In production, you might want to restrict this to specific origins
+    const allowedOrigins = [
+      'http://localhost:5173',  // Vite default development port
+      'http://localhost:3000',  // Common React development port
+      'https://securenotez.onrender.com'  // Your production frontend
+    ];
+    
+    // For development allow all origins or check if origin is in allowed list
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, origin);
+    } else {
+      callback(null, allowedOrigins[0]); 
+    }
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],

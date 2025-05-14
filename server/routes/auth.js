@@ -17,14 +17,11 @@ router.post('/signup', async (req, res) => {
 
     const hashPassword = await bcrypt.hash(password, 10);
     const newUser = new User({ username, email, password: hashPassword });
-    await newUser.save();
-
-    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    await newUser.save();    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
    res.cookie("token", token, {
   httpOnly: true,
-  secure: true,
-  sameSite: "none",
-  domain: ".onrender.com", // Allow all subdomains
+  secure: process.env.NODE_ENV === 'production', // Only secure in production
+  sameSite: process.env.NODE_ENV === 'production' ? "none" : "lax",
   path: "/", // Accessible across all paths
   maxAge: 3600000,
 });
@@ -48,9 +45,8 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign({ id: isUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
    res.cookie("token", token, {
   httpOnly: true,
-  secure: true,
-  sameSite: "none",
-  domain: ".onrender.com", // Allow all subdomains
+  secure: process.env.NODE_ENV === 'production', // Only secure in production
+  sameSite: process.env.NODE_ENV === 'production' ? "none" : "lax",
   path: "/", // Accessible across all paths
   maxAge: 3600000,
 });
@@ -74,11 +70,11 @@ router.get('/securityCheck', (req, res) => {
   }
 });
 
-router.post('/logout', (req, res) => {
-  res.clearCookie('token', {
+router.post('/logout', (req, res) => {  res.clearCookie('token', {
     httpOnly: true,
-    secure: true,
-    sameSite: "none"
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? "none" : "lax",
+    path: "/"
   });
   res.status(200).json({ message: "User logged out successfully" });
 });

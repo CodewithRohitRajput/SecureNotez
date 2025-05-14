@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import api from '../services/api'
 import Footer from '../components/Footer'
 
 const Signup = () => {
@@ -10,29 +10,36 @@ const Signup = () => {
   const [emaill, setEmaill] = useState('')
   const [passwordl, setPasswordl] = useState('')
   const navigate = useNavigate()
-
+  
   const handleSignup = async (e) => {
     e.preventDefault()
     try {
-      await axios.post(`https://securenotez.onrender.com/user/signup`, { username, email, password }, { withCredentials: true })
-      setUsername('')
-      setEmail('')
-      setPassword('')
-      navigate('/')
-    } catch (err) {
+      const response = await api.post('/user/signup', { username, email, password })
+      
+      if (response.status === 200) {
+        setUsername('')
+        setEmail('')
+        setPassword('')
+        navigate('/')
+      }    } catch (err) {
       console.error(err)
+      alert("Signup failed: " + (err.response?.data?.message || "Unknown error"))
     }
   }
-
+  
   const handleLogin = async (e) => {
     e.preventDefault()
     try {
-      await axios.post(`https://securenotez.onrender.com/user/login`, { email: emaill, password: passwordl }, { withCredentials: true })
-      setEmaill('')
-      setPasswordl('')
-      navigate('/')
+      const response = await api.post('/user/login', { email: emaill, password: passwordl })
+      
+      if (response.status === 200) {
+        setEmaill('')
+        setPasswordl('')
+        navigate('/')
+      }
     } catch (err) {
       console.error(err)
+      alert("Login failed: " + (err.response?.data?.message || "Unknown error"))
     }
   }
 

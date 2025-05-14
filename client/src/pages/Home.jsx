@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import api from '../services/api'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
@@ -8,13 +8,13 @@ const Home = () => {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const navigate = useNavigate()
-
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await axios.get('https://securenotez.onrender.com/user/securityCheck', { withCredentials: true })
+        const res = await api.get('/user/securityCheck')
         // If token is valid, stay on the page (do nothing)
       } catch (err) {
+        console.error("Auth check failed:", err)
         // If token is missing or invalid, redirect to Security page
         navigate('/Security')
       }
@@ -22,13 +22,17 @@ const Home = () => {
 
     checkAuth()
   }, [navigate])
-
   const handleCreateNote = async (e) => {
     e.preventDefault()
-    await axios.post(`https://securenotez.onrender.com/notes/addNote`, { title, description }, { withCredentials: true })
-    setTitle('')
-    setDescription('')
-    navigate('/seeNotes')
+    try {
+      await api.post('/notes/addNote', { title, description })
+      setTitle('')
+      setDescription('')
+      navigate('/seeNotes')
+    } catch (error) {
+      console.error("Failed to create note:", error)
+      alert("Failed to create note: " + (error.response?.data?.message || "Unknown error"))
+    }
   }
 
   return (
