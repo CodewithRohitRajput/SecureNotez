@@ -12,9 +12,5 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, '')
       }
     },
-    cors: {
-      origin: true,
-      credentials: true
-    }
   },
 })
