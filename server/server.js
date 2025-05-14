@@ -24,7 +24,8 @@ const corsOptions = {
     const allowedOrigins = [
       'http://localhost:5173',  // Vite default development port
       'http://localhost:3000',  // Common React development port
-      'https://securenotez.onrender.com'  // Your production frontend
+      'https://securenotez.onrender.com',
+      'https://securenotez-1.onrender.com',
     ];
     
     // For development allow all origins or check if origin is in allowed list
