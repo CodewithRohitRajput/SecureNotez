@@ -73,25 +73,13 @@ res.cookie("token", token, {
 
   router.get('/securityCheck', (req, res) => {
   const token = req.cookies.token;
-
-  if (!token) {
-    return res.status(401).json({ message: "No token found" });
-  }
+  if (!token) return res.status(401).json({ message: "No token found" });
 
   try {
     const decoded = jwt.verify(token, secret);
-    req.user = decoded;
-    
-    res.cookie('token', token, {
-  httpOnly: true,
-  secure: false,
-  sameSite: 'Lax',
-  domain: '.onrender.com' 
-});
-
-    res.status(200).json({ message: "Token received, give access to user" });
+    res.status(200).json({ message: "Token valid" });
   } catch (err) {
-    res.status(401).json({ message: "Invalid or expired token" });
+    res.status(401).json({ message: "Invalid token" });
   }
 });
 
