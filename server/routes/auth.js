@@ -27,11 +27,12 @@ router.post('/signup' , async(req,res)=>{
       const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
     // Set token in cookie
  // In signup/login routes:
-res.cookie('token', token, {
+res.cookie("token", token, {
   httpOnly: true,
-  secure: true, // Always true for Render (HTTPS)
-  sameSite: 'none', // Required for cross-origin cookies
+  secure: true, // MUST BE TRUE FOR RENDER (HTTPS)
+  sameSite: "none", // REQUIRED for cross-origin cookies
   maxAge: 3600000, // 1 hour
+  domain: ".onrender.com" // Allow cookies for all subdomains (*.onrender.com)
 });
 
         res.status(200).json({message : "User registered" , token });
@@ -54,11 +55,12 @@ router.post('/login' , async(req,res)=>{
       const token = jwt.sign({ id: isUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
     // Set token in cookie
   // In signup/login routes:
-res.cookie('token', token, {
+res.cookie("token", token, {
   httpOnly: true,
-  secure: true, // Always true for Render (HTTPS)
-  sameSite: 'none', // Required for cross-origin cookies
+  secure: true, // MUST BE TRUE FOR RENDER (HTTPS)
+  sameSite: "none", // REQUIRED for cross-origin cookies
   maxAge: 3600000, // 1 hour
+  domain: ".onrender.com" // Allow cookies for all subdomains (*.onrender.com)
 });
 
         res.status(200).json({message : "User Logged In " , token});
